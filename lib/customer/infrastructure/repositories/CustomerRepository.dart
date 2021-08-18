@@ -62,8 +62,13 @@ class CustomerRepository extends CustomerInterface {
         email: customerModel.email,
         bankAccountNumber: customerModel.bankAccountNumber,
       );
-      Customer? customer = await localDataSource.store(cm);
-      return Right(customer);
+
+      try {
+        Customer? customer = await localDataSource.store(cm);
+        return Right(customer);
+      }on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
     }
     try {
       Customer? customer = await remoteDataSource.store(customerModel);

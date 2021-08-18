@@ -16,6 +16,11 @@ Future<void> init() async {
 }
 
 Future<void> customerDependencies() async {
+
+  serviceLocator.registerLazySingleton(
+        () => CustomerFacadeService(serviceLocator()),
+  );
+
   // Presentation Layer - Blocs
   serviceLocator.registerFactory(
     () => CustomerDetailBloc(
@@ -54,7 +59,4 @@ Future<void> customerDependencies() async {
     () => NetworkInfoImpl(),
   );
 
-  serviceLocator.registerLazySingleton(
-    () => CustomerFacadeService(serviceLocator()),
-  );
 }

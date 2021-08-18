@@ -30,7 +30,7 @@ class MyDatabase {
 
   FutureOr<void> onCreate(Database db, int version) {
     db.execute(
-        'CREATE TABLE IF NOT EXISTS ${CustomerLocalDataSource.table} (id INTEGER PRIMARY KEY AUTOINCREMENT, firstname Text, lastname Text, phoneNumber TEXT UNIQUE, email Text UNIQUE, bankAccountNumber Text Unique)');
+        'CREATE TABLE IF NOT EXISTS ${CustomerLocalDataSource.table} (id INTEGER PRIMARY KEY AUTOINCREMENT, firstname Text, lastname Text,dateOfBirth Text, phoneNumber TEXT UNIQUE, email Text UNIQUE, bankAccountNumber Text Unique)');
   }
 
   FutureOr<void> onUpgrade(Database db, int oldVersion, int newVersion) {}

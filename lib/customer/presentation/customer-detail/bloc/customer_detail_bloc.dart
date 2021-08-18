@@ -21,6 +21,7 @@ class CustomerDetailBloc
   Stream<CustomerDetailState> mapEventToState(
     CustomerDetailEvent event,
   ) async* {
+    yield CustomerDetailLoading();
     if (event is GetCustomer) {
       final failureOrFetched =
           await _customerFacadeService.getCustomer(event.id);

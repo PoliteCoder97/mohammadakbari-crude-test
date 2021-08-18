@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:mohammad_akbari_crud_test/core/error/Failures.dart';
 import 'package:mohammad_akbari_crud_test/customer/application/CustomerFacadeService.dart';
 import 'package:mohammad_akbari_crud_test/customer/domain/entities/Customer.dart';
@@ -15,6 +14,7 @@ class CustomerListBloc extends Bloc<CustomerListEvent, CustomerListState> {
 
   CustomerListBloc(this._customerFacadeService) : super(CustomerListInitial());
 
+
   @override
   Stream<CustomerListState> mapEventToState(
     CustomerListEvent event,
@@ -22,8 +22,8 @@ class CustomerListBloc extends Bloc<CustomerListEvent, CustomerListState> {
     yield CustomerListLoading();
     if (event is FetchCustomers) {
       final failureOrFetched = await _customerFacadeService.fetchCustomers();
-
       yield* failureOrFetched.fold((failure) async* {
+        print('failure: $failure');
         if (failure is NetworkFailure) {
           yield CustomerListNetworkError();
         } else if (failure is ServerFailure) {
@@ -32,8 +32,10 @@ class CustomerListBloc extends Bloc<CustomerListEvent, CustomerListState> {
           yield CustomerListUnAuthorizeError();
         }
       }, (customers) async* {
+        print('event customers: $customers');
         yield CustomerListLoaded(customers);
       });
     }
   }
+
 }

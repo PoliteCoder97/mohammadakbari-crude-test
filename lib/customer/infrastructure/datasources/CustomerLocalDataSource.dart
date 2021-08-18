@@ -1,6 +1,8 @@
+import 'package:mohammad_akbari_crud_test/core/error/Exceptions.dart';
 import 'package:mohammad_akbari_crud_test/core/my_database.dart';
 import 'package:mohammad_akbari_crud_test/customer/domain/entities/Customer.dart';
 import 'package:mohammad_akbari_crud_test/customer/infrastructure/models/CustomerModel.dart';
+import 'package:sqflite/sqflite.dart';
 
 abstract class CustomerLocalDataSource extends MyDatabase {
   static final String table = 'customers';
@@ -74,9 +76,23 @@ class CustomerLocalDataSourceImpl extends CustomerLocalDataSource {
       params.remove('id');
 
       int recordId = await db!.insert(CustomerLocalDataSource.table, params);
+      print('record id: $recordId');
       customer.id = recordId;
       return customer;
     } catch (e) {
+      print('store error: $e');
+      if(e is DatabaseException){
+        print('email unique error: ${e.isUniqueConstraintError('customers.email')}');
+        if(e.isUniqueConstraintError('customers.email')){
+          throw ServerException('This email address is exists in database');
+        }
+        if(e.isUniqueConstraintError('customers.bankAccountNumber')){
+          throw ServerException('This bankAccountNumber is exists in database');
+        }
+        if(e.isUniqueConstraintError('customers.phoneNumber')){
+          throw ServerException('This phoneNumber is exists in database');
+        }
+      }
       return null;
     }
   }

@@ -1,6 +1,6 @@
 part of 'store_customer_bloc.dart';
 
-abstract class StoreCustomerEvent extends Equatable {
+abstract class StoreCustomerEvent  {
   const StoreCustomerEvent();
 }
 
@@ -9,7 +9,7 @@ class StoreEvent extends StoreCustomerEvent {
 
   StoreEvent(this.customer);
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  // @override
+  // // TODO: implement props
+  // List<Object?> get props => [this.customer];
 }
