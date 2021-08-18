@@ -19,10 +19,9 @@ abstract class CustomerRemoteDataSource {
 }
 
 class CustomerRemoteDataSourceImpl extends CustomerRemoteDataSource {
-  late http.Client client;
+   http.Client client= http.Client();
 
   CustomerRemoteDataSourceImpl() {
-    if (client == null) client = http.Client();
   }
 
   @override

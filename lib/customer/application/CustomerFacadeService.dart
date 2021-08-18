@@ -9,11 +9,11 @@ class CustomerFacadeService with CustomerLogic {
 
   CustomerFacadeService(this._repository);
 
-  Future<Either<Failure, Customer>> store(Customer customerModel) async {
+  Future<Either<Failure, Customer?>> store(Customer customerModel) async {
     return _repository!.store(customerModel);
   }
 
-  Future<Either<Failure, Customer>> getCustomer(int id) async {
+  Future<Either<Failure, Customer?>> getCustomer(int id) async {
     return _repository!.getCustomer(id);
   }
 
@@ -21,7 +21,7 @@ class CustomerFacadeService with CustomerLogic {
     return _repository!.fetchCustomers();
   }
 
-  Future<Either<Failure, Customer>> update(Customer customerModel) async {
+  Future<Either<Failure, Customer?>> update(Customer customerModel) async {
     return _repository!.update(customerModel);
   }
 

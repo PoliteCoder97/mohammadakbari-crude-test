@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mohammad_akbari_crud_test/customer/presentation/customer-detail/CustomerDetailPage.dart';
+import 'package:mohammad_akbari_crud_test/customer/presentation/customer-list/CustomerListPage.dart';
+import 'package:mohammad_akbari_crud_test/customer/presentation/store-customer/StoreCustomerPage.dart';
 
 import './injections.dart' as di;
 
@@ -15,11 +18,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Container(
-        child: Center(
-          child: Text('PoliteCoder DDD CRUD Test'),
-        ),
-      ),
+      initialRoute: CustomerListPage.routeName,
+      routes: {
+        CustomerListPage.routeName: (context) => CustomerListPage(),
+        CustomerDetailPage.routeName: (context) => CustomerDetailPage(),
+        StoreCustomerPage.routeName: (context) => StoreCustomerPage(),
+      },
     );
   }
 }

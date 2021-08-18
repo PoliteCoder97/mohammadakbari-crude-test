@@ -9,18 +9,18 @@ class CustomerApi {
   final CustomerFacadeService customerFacadeService =
       serviceLocator<CustomerFacadeService>();
 
-  Future<Either<Failure, Customer>> store(Customer customerModel) {
+  Future<Either<Failure, Customer?>> store(Customer customerModel) {
     return customerFacadeService.store(customerModel);
   }
 
-  Future<Either<Failure, Customer>> getCustomer(int id) {
+  Future<Either<Failure, Customer?>> getCustomer(int id) {
     return customerFacadeService.getCustomer(id);
   }
   Future<Either<Failure, List<Customer>>> fetshCustomers(int id) {
     return customerFacadeService.fetchCustomers();
   }
 
-  Future<Either<Failure, Customer>> update(Customer customerModel) {
+  Future<Either<Failure, Customer?>> update(Customer customerModel) {
     return customerFacadeService.update(customerModel);
   }
 

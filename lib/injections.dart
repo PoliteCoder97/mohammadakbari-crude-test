@@ -7,6 +7,8 @@ import 'package:mohammad_akbari_crud_test/customer/presentation/customer-detail/
 import 'package:mohammad_akbari_crud_test/customer/presentation/customer-list/bloc/customer_list_bloc.dart';
 import 'package:mohammad_akbari_crud_test/customer/presentation/store-customer/bloc/store_customer_bloc.dart';
 
+import 'customer/application/CustomerFacadeService.dart';
+
 final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
@@ -50,5 +52,9 @@ Future<void> customerDependencies() async {
 
   serviceLocator.registerLazySingleton(
     () => NetworkInfoImpl(),
+  );
+
+  serviceLocator.registerLazySingleton(
+    () => CustomerFacadeService(serviceLocator()),
   );
 }

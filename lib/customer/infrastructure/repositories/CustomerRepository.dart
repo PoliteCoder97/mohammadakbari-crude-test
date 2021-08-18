@@ -9,9 +9,9 @@ import 'package:mohammad_akbari_crud_test/customer/infrastructure/datasources/Cu
 import 'package:mohammad_akbari_crud_test/customer/infrastructure/models/CustomerModel.dart';
 
 class CustomerRepository extends CustomerInterface {
-  final NetworkInfo networkInfo;
-  final CustomerLocalDataSource localDataSource;
-  final CustomerRemoteDataSource remoteDataSource;
+  final NetworkInfoImpl networkInfo;
+  final CustomerLocalDataSourceImpl localDataSource;
+  final CustomerRemoteDataSourceImpl remoteDataSource;
 
   CustomerRepository({
     required this.networkInfo,
@@ -36,7 +36,7 @@ class CustomerRepository extends CustomerInterface {
   }
 
   @override
-  Future<Either<Failure, Customer>> getCustomer(int id) async {
+  Future<Either<Failure, Customer?>> getCustomer(int id) async {
     if (!await networkInfo.isConnected) {
       Customer? customer = await localDataSource.getCustomer(id);
       return Right(customer);
@@ -52,7 +52,7 @@ class CustomerRepository extends CustomerInterface {
   }
 
   @override
-  Future<Either<Failure, Customer>> store(Customer customerModel) async {
+  Future<Either<Failure, Customer?>> store(Customer customerModel) async {
     if (!await networkInfo.isConnected) {
       CustomerModel cm = CustomerModel(
         firstname: customerModel.firstname,
@@ -76,7 +76,7 @@ class CustomerRepository extends CustomerInterface {
   }
 
   @override
-  Future<Either<Failure, Customer>> update(Customer customerModel) async {
+  Future<Either<Failure, Customer?>> update(Customer customerModel) async {
     if (!await networkInfo.isConnected) {
       CustomerModel cm = CustomerModel(
         firstname: customerModel.firstname,
@@ -109,8 +109,10 @@ class CustomerRepository extends CustomerInterface {
       final customers = await remoteDataSource.fetchCustomers();
       return Right(customers);
     } on ServerException catch (e) {
+      print('server error');
       return Left(ServerFailure(e.message));
     } on UnAuthorizeException catch (e) {
+      print('unAuthorize error');
       return Left(UnAutoriseFailure());
     }
   }
